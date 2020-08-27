@@ -32,8 +32,10 @@ app
   :: Request
   -> (Response -> IO ResponseReceived)
   -> IO ResponseReceived
-app _ cb =
-  error "Application not implemented"
+app _ cb = cb $ responseLBS
+  status200
+  []
+  "Hello, World!"
 
 -- We keep this main function here as it is useful to build your application as
 -- a library. The reasoning behind this is that when you come to do your
@@ -41,4 +43,4 @@ app _ cb =
 -- needing to worry about any initialisation code you've buried in your
 -- executable Main.hs.
 runApp :: IO ()
-runApp = run undefined undefined
+runApp = run 8000 app
